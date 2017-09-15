@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="FlaskBB is a forum software written in Flask">
+        <meta name="author" content="FlaskBB Team">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <title>
+        {% block title %}
+            {%- if not page_title -%}
+                {{ flaskbb_config["PROJECT_TITLE"] }} - {{ flaskbb_config["PROJECT_SUBTITLE"] }}
+            {%- else -%}
+                {{ page_title }} - {{ flaskbb_config["PROJECT_TITLE"] }}
+            {%- endif -%}
+        {% endblock %}
+        </title>
+
+        {% block stylesheets %}
+        <!-- syntax highlighting -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/pygments.css') }}">
+        <!-- bootstrap & FlatGreen theme -->
+        <link rel="stylesheet" href="{{ theme_static('css/styles.css') }}">
+        <!-- lato font -->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+        {% endblock %}
+
+        {# for extra stylesheets. e.g. a template has to add something #}
+        {% block css %}
+        {% endblock %}
+
+        {# for various extra things #}
+        {% block head_extra %}
+        {% endblock %}
+    </head>
+
+    <body>
+
+        <!-- main forum layout -->
+        <div class="flaskbb-layout">
+
+            <!-- forum header - place for the project title and subtitle -->
+            {% block header %}
+            <div class="flaskbb-header">
+                <div class="flaskbb-meta">
+                    <div class="flaskbb-title">{{ flaskbb_config["PROJECT_TITLE"] }}</div>
+                    <div class="flaskbb-subtitle">{{ flaskbb_config["PROJECT_SUBTITLE"] }}</div>
+                </div>
+            </div>
+            {% endblock %}
+
+            <!-- forum menu - contains all the navigation items -->
+            {% block navigation %}
+            <div class="navbar" role="navigation">
+                <div class="navbar">
+                    <!-- navbar left -->
+                    <ul class="navlist">
+                        {%- from theme("macros.html") import is_active, topnav with context -%}
+                        {{ emit_event("before-first-navigation-element") }}
+
+                        {{ topnav(endpoint='forum.index', name=_('Forum'), icon='fa fa-comment') }}
+                        {{ topnav(endpoint='forum.memberlist', name=_('Memberlist'), icon='fa fa-user') }}
+                        {{ topnav(endpoint='forum.search', name=_('Search'), icon='fa fa-search') }}
+
+                        {{ emit_event("after-last-navigation-element") }}
+                    </ul>
+
+                    <!-- navbar right -->
+                    <ul class="navlist">
+                    {% if current_user and current_user.is_authenticated %}
+                        <!-- User Menu -->
+                        {{ topnav(endpoint='user.profile', name=current_user.username, icon='fa fa-user', username=current_user.username)}}
+                        <li><a href="{{ url_for('message.inbox') }}" class="{{ is_active('message.inbox') }}"><span class="fa fa-envelope fa-fw"></span> {% trans %}Inbox{% endtrans %} <span class="label {% if current_user.unread_count > 0 %}label-danger{% else %}label-info{% endif %}">{{ current_user.unread_count }}</span></a></li>
+                        {{ topnav(endpoint='forum.topictracker', name=_("Topic Tracker"), icon='fa fa-book') }}
+                        {{ topnav(endpoint='user.settings', name=_("Settings"), icon='fa fa-cogs') }}
+                      {% if current_user|is_admin_or_moderator %}
+                        {{ topnav(endpoint='management.overview', name=_("Management"), icon='fa fa-cog') }}
+                      {% endif %}
+                        {{ topnav(endpoint='auth.logout', name=_("Logout"), icon='fa fa-power-off') }}
+
+                    {% else %} {# i.e. if not (current_user and current_user.is_authenticated) #}
+
+                        <!-- Not logged in - Login/Register -->
+                      {% if flaskbb_config["REGISTRATION_ENABLED"] %}
+                        {{ topnav(endpoint='auth.register', name=_("Register"), icon='fa fa-user-plus') }}
+                      {% endif %}
+                        {{ topnav(endpoint='auth.login', name=_("Login"), icon='fa fa-user') }}
+                        {# topnav(endpoint='auth.forgot_password', name=_("Reset Passwort"), icon='fa fa-undo') #}
+                    {% endif %}
+                    </ul> <!-- end navbar right -->
+                </div> <!-- end navbar-collapse -->
+            </div> <!-- end navbar -->
+            {% endblock %}
+
+            <div class="container">
+                <!-- Place for all the (flashed) messages -->
+                {% block messages %}
+                <div id="flashed-messages">
+                    {% include theme('flashed_messages.html') %}
+                </div>
+                {% endblock %}
+
+                <!-- the actual content block -->
+                {% block content %}
+                {% endblock %}
+            </div> <!-- end container -->
+
+        </div> <!-- end flaskbb-layout -->
+
+        <!-- the forum footer -->
+        {% block footer %}
+        <div class="flaskbb-footer">
+            <div class="flaskbb-footer-content">
+                <div class="site-info floatleft">
+                    &copy; 2013 - 2017 <a href="https://flaskbb.org">FlaskBB Team</a>
+                </div>
+                <div class="site-info floatright">
+                    Powered by <a href="https://flaskbb.org">FlaskBB</a>
+                </div>
+                <div class="site-info-end"></div>
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block javascript %}
+        <!-- jquery and bootstrap and flaskbb.js -->
+        <script src="{{ url_for('static', filename='js/scripts.min.js') }}"></script>
+        {% endblock %}
+
+        {# for extra scripts in other templates. #}
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

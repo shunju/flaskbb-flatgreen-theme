@@ -1,0 +1,68 @@
+// bootstrap colors
+$blue: #337ab7;
+$fresh-blue: #0088cc;
+$light-blue: #5bc0de;
+$green: #5cb85c;
+$dark-green: #3C763D;
+$orange: #f0ad4e;
+$red: #d9534f;
+$gray: #555;
+
+$stronggreen: #66b433;
+$middlegreen: #b8ee99;
+$weakgreen: #dbffcc;
+$weakestgreen: #edffe5;
+
+
+// link colors
+$link-color: #07f;
+$link-visited-color: $link-color; // #007;
+$link-hover-color: #f00;
+$link-active-color: #70f;
+
+// main colors
+//$background-color: #f6f9fc; // old: #e8f1f2
+//$font-color: #333;
+$border-color: $middlegreen;
+$head-background: $weakgreen;
+$meta-background: $weakestgreen;
+$hover: #f8f8f8;
+
+// header colors
+$header-title-color: #fff;
+$header-subtitle-color: rgba($header-title-color, 0.9);
+$header-background-primary: $stronggreen;
+$header-background-secondary: $stronggreen;
+
+$navigation-color: #000;
+$navigation-bg: #f8f8f8;
+$navigation-hover-color: $weakgreen;
+
+$navbar-bg: $stronggreen;
+$navitem-bg: #000;
+$active-navitem-bg: $stronggreen;
+$navitem-font: #fff;
+$dropdown-bg: #fff;
+
+// panel colors
+$panel-bg: #fff;            // panel body background
+$panel-head-bg: $head-background;    // panel head background
+$panel-meta-bg: $meta-background;    // panel meta background
+$panel-meta-border: $border-color;   // panel meta (bottom) border
+$panel-border: $border-color;        // panel border (all over)
+$panel-hover: $hover;
+
+
+// post colors
+$post-box-bg: $panel-bg;
+$post-box-border: $border-color;
+$post-meta-border: $panel-meta-bg;
+$post-meta-bg: $panel-bg;
+$post-signature-border: $panel-meta-bg;
+$post-footer-border: $border-color;
+$post-footer-bg: $panel-bg;
+
+
+$author-box-bg: $weakestgreen;
+$author-online: $green;
+$author-offline: $gray;

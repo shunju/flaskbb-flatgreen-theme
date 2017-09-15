@@ -1,0 +1,52 @@
+{
+  "name": "flaskbb-theme-flatgreen",
+  "description": "A sparse green theme.",
+  "version": "0.0.0",
+  "license": "BSD-3-Clause",
+  "author": "Toshiki Wulf <webflaskbb@toshiki.de>",
+  "url": "https://toshiki.de",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shunju/flaskbb-theme-flatgreen"
+  },
+  "bugs": "https://github.com/shunju/flaskbb-theme-flatgreen/issues",
+  "keywords": [
+    "flaskbb",
+    "theme",
+    "flatgreen"
+  ],
+  "scripts": {
+    "clean": "rm -f node_modules",
+    "autoprefixer": "postcss -u autoprefixer -r static/css/*",
+    "scss": "./tools/build_css",
+    "uglify": "./tools/build_js",
+    "imagemin": "imagemin src/img/* -o static/img",
+    "fonts": "./tools/build_fonts",
+    "build:css": "npm run scss && npm run autoprefixer",
+    "build:js": "npm run uglify",
+    "build:images": "npm run imagemin && npm run fonts",
+    "build:all": "npm run build:css && npm run build:js && npm run build:images",
+    "watch:css": "onchange 'src/scss' -- npm run build:css",
+    "watch:js": "onchange 'src/js' -- npm run build:js",
+    "watch:all": "npm-run-all -p watch:css watch:js"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.7.5",
+    "imagemin-cli": "^3.0.0",
+    "node-sass": "^4.5.0",
+    "npm-run-all": "^4.0.2",
+    "onchange": "^3.2.1",
+    "postcss-cli": "^2.6.0",
+    "uglify-js": "^2.7.5"
+  },
+  "dependencies": {
+    "bootstrap-markdown": "^2.10.0",
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "jquery-textcomplete": "^1.8.0",
+    "marked": "^0.3.6",
+    "purify-css": "^1.2.5"
+  }
+}

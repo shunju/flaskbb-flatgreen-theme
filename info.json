@@ -1,0 +1,11 @@
+{
+    "application": "flaskbb",
+    "identifier": "flatgreen",
+    "name": "FlatGreen",
+    "author": "shunju",
+    "license": "BSD 3-Clause",
+    "website": "https://flaskbb.org",
+    "description": "A sparse green theme.",
+    "preview": "preview.png",
+    "version": "0.0.0"
+}
